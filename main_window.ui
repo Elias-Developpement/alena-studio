@@ -10,10 +10,57 @@
     <height>720</height>
    </rect>
   </property>
-  <property name="windowTitle">
-   <string>MainWindow</string>
+  <property name="minimumSize">
+   <size>
+    <width>1280</width>
+    <height>720</height>
+   </size>
   </property>
-  <widget class="QWidget" name="centralWidget"/>
+  <property name="windowTitle">
+   <string>Alena Studio</string>
+  </property>
+  <property name="windowIcon">
+   <iconset>
+    <normaloff>../../../../../Images/logo1.png</normaloff>../../../../../Images/logo1.png</iconset>
+  </property>
+  <property name="statusTip">
+   <string/>
+  </property>
+  <property name="layoutDirection">
+   <enum>Qt::LeftToRight</enum>
+  </property>
+  <property name="tabShape">
+   <enum>QTabWidget::Rounded</enum>
+  </property>
+  <widget class="QWidget" name="centralWidget">
+   <layout class="QHBoxLayout" name="horizontalLayout" stretch="2,5">
+    <item>
+     <layout class="QVBoxLayout" name="left_side" stretch="5,2">
+      <item>
+       <widget class="QGraphicsView" name="tileset_view">
+        <property name="enabled">
+         <bool>false</bool>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QTreeView" name="project_tree">
+        <property name="enabled">
+         <bool>false</bool>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </item>
+    <item>
+     <widget class="QGraphicsView" name="map_view">
+      <property name="enabled">
+       <bool>false</bool>
+      </property>
+     </widget>
+    </item>
+   </layout>
+  </widget>
   <widget class="QMenuBar" name="menuBar">
    <property name="geometry">
     <rect>
@@ -38,9 +85,75 @@
     <property name="title">
      <string>&amp;Edition</string>
     </property>
+    <addaction name="menu_cancel"/>
+    <addaction name="menu_restore"/>
+    <addaction name="separator"/>
+    <addaction name="menu_cut"/>
+    <addaction name="menu_copy"/>
+    <addaction name="menu_paste"/>
+    <addaction name="separator"/>
+    <addaction name="menu_preferences"/>
+   </widget>
+   <widget class="QMenu" name="menu_database">
+    <property name="title">
+     <string>&amp;Base de données</string>
+    </property>
+    <addaction name="menu_characters"/>
+    <addaction name="menu_ennemies"/>
+    <addaction name="menu_tilesets"/>
+    <addaction name="menu_animations"/>
+    <addaction name="menu_common_events"/>
+   </widget>
+   <widget class="QMenu" name="menu_map">
+    <property name="title">
+     <string>&amp;Carte</string>
+    </property>
+    <widget class="QMenu" name="menu_zoom_2">
+     <property name="enabled">
+      <bool>false</bool>
+     </property>
+     <property name="title">
+      <string>Zoom</string>
+     </property>
+     <addaction name="menu_zoom_25"/>
+     <addaction name="menu_zoom_50"/>
+     <addaction name="menu_zoom_100"/>
+    </widget>
+    <addaction name="menu_brush"/>
+    <addaction name="menu_rectangle"/>
+    <addaction name="menu_selection"/>
+    <addaction name="separator"/>
+    <addaction name="menu_zoom_2"/>
+    <addaction name="separator"/>
+    <addaction name="menu_events"/>
+    <addaction name="menu_low_layer"/>
+    <addaction name="menu_high_layer"/>
+   </widget>
+   <widget class="QMenu" name="menu_jeu">
+    <property name="title">
+     <string>&amp;Jeu</string>
+    </property>
+    <addaction name="menu_fullscreen"/>
+    <addaction name="menu_debug"/>
+    <addaction name="separator"/>
+    <addaction name="menu_test_project"/>
+   </widget>
+   <widget class="QMenu" name="menu_help">
+    <property name="title">
+     <string>&amp;Aide</string>
+    </property>
+    <addaction name="menu_check_update"/>
+    <addaction name="menu_website"/>
+    <addaction name="menu_guide"/>
+    <addaction name="separator"/>
+    <addaction name="menu_about"/>
    </widget>
    <addaction name="menu_file"/>
    <addaction name="menu_edit"/>
+   <addaction name="menu_database"/>
+   <addaction name="menu_map"/>
+   <addaction name="menu_jeu"/>
+   <addaction name="menu_help"/>
   </widget>
   <widget class="QToolBar" name="mainToolBar">
    <attribute name="toolBarArea">
@@ -50,7 +163,14 @@
     <bool>false</bool>
    </attribute>
   </widget>
-  <widget class="QStatusBar" name="statusBar"/>
+  <widget class="QStatusBar" name="statusBar">
+   <property name="toolTip">
+    <string/>
+   </property>
+   <property name="statusTip">
+    <string/>
+   </property>
+  </widget>
   <action name="menu_new_project">
    <property name="text">
     <string>Nouveau projet</string>
@@ -68,6 +188,9 @@
    </property>
   </action>
   <action name="menu_save_project">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
    <property name="text">
     <string>Enregistrer le projet</string>
    </property>
@@ -76,6 +199,9 @@
    </property>
   </action>
   <action name="menu_close_project">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
    <property name="text">
     <string>Fermer le projet</string>
    </property>
@@ -89,6 +215,282 @@
    </property>
    <property name="shortcut">
     <string>Ctrl+F4</string>
+   </property>
+  </action>
+  <action name="menu_cancel">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="text">
+    <string>Annuler</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+Z</string>
+   </property>
+  </action>
+  <action name="menu_restore">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="text">
+    <string>Rétablir</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+Y</string>
+   </property>
+  </action>
+  <action name="menu_cut">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="text">
+    <string>Couper</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+X</string>
+   </property>
+  </action>
+  <action name="menu_copy">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="text">
+    <string>Copier</string>
+   </property>
+  </action>
+  <action name="menu_paste">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="text">
+    <string>Coller</string>
+   </property>
+  </action>
+  <action name="menu_preferences">
+   <property name="text">
+    <string>Préférences</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+P</string>
+   </property>
+  </action>
+  <action name="menu_characters">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="text">
+    <string>Personnages</string>
+   </property>
+   <property name="shortcut">
+    <string>F4</string>
+   </property>
+  </action>
+  <action name="menu_ennemies">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="text">
+    <string>Ennemis</string>
+   </property>
+  </action>
+  <action name="menu_tilesets">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="text">
+    <string>Tilesets</string>
+   </property>
+   <property name="shortcut">
+    <string>F6</string>
+   </property>
+  </action>
+  <action name="menu_animations">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="text">
+    <string>Animations</string>
+   </property>
+   <property name="shortcut">
+    <string>F7</string>
+   </property>
+  </action>
+  <action name="menu_common_events">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="text">
+    <string>Evénements commun</string>
+   </property>
+   <property name="shortcut">
+    <string>F8</string>
+   </property>
+  </action>
+  <action name="menu_brush">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="text">
+    <string>Pinceau</string>
+   </property>
+   <property name="shortcut">
+    <string>P</string>
+   </property>
+  </action>
+  <action name="menu_rectangle">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="text">
+    <string>Rectangle</string>
+   </property>
+   <property name="shortcut">
+    <string>R</string>
+   </property>
+  </action>
+  <action name="menu_selection">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="text">
+    <string>Sélection</string>
+   </property>
+   <property name="shortcut">
+    <string>S</string>
+   </property>
+  </action>
+  <action name="menu_zoom_25">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="text">
+    <string>25%</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+&amp;</string>
+   </property>
+  </action>
+  <action name="menu_zoom_50">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="text">
+    <string>50%</string>
+   </property>
+   <property name="shortcut">
+    <string/>
+   </property>
+  </action>
+  <action name="menu_zoom_100">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="text">
+    <string>100%</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+&quot;</string>
+   </property>
+  </action>
+  <action name="menu_events">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="text">
+    <string>Evénements</string>
+   </property>
+   <property name="shortcut">
+    <string>&amp;</string>
+   </property>
+  </action>
+  <action name="menu_low_layer">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="text">
+    <string>Couche inférieur</string>
+   </property>
+   <property name="shortcut">
+    <string>É</string>
+   </property>
+  </action>
+  <action name="menu_high_layer">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="text">
+    <string>Couche supérieur</string>
+   </property>
+   <property name="shortcut">
+    <string>&quot;</string>
+   </property>
+  </action>
+  <action name="menu_fullscreen">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="text">
+    <string>Plein écran</string>
+   </property>
+  </action>
+  <action name="menu_debug">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="text">
+    <string>Mode debug</string>
+   </property>
+  </action>
+  <action name="menu_test_project">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="text">
+    <string>Tester le projet</string>
+   </property>
+   <property name="shortcut">
+    <string>F9</string>
+   </property>
+  </action>
+  <action name="menu_check_update">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="text">
+    <string>Rechercher une mise à jour</string>
+   </property>
+   <property name="shortcut">
+    <string>F1</string>
+   </property>
+  </action>
+  <action name="menu_website">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="text">
+    <string>Site internet</string>
+   </property>
+  </action>
+  <action name="menu_guide">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="text">
+    <string>Guide</string>
+   </property>
+   <property name="shortcut">
+    <string>F2</string>
+   </property>
+  </action>
+  <action name="menu_about">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="text">
+    <string>A propos</string>
+   </property>
+   <property name="shortcut">
+    <string>F3</string>
    </property>
   </action>
  </widget>
