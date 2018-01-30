@@ -9,11 +9,24 @@ NewProjectDialog::NewProjectDialog(QWidget *parent) :
     ui(new Ui::NewProjectDialog)
 {
     ui->setupUi(this);
+    validate = false;
 }
 
 NewProjectDialog::~NewProjectDialog()
 {
     delete ui;
+}
+
+bool NewProjectDialog::get_validate() {
+    return validate;
+}
+
+void NewProjectDialog::set_validate(bool action) {
+    validate = action;
+}
+
+void NewProjectDialog::set_project(Project *p) {
+    project = p;
 }
 
 void NewProjectDialog::on_path_project_button_clicked()
@@ -34,32 +47,11 @@ void NewProjectDialog::on_button_box_accepted()
     if(ui->project_name_field->text() != "" && ui->path_project_field->text() != "") {
         QString path = ui->path_project_field->text() + "/" + ui->project_name_field->text();
         try {
-            if(!QDir(path).exists()) {
-                QDir().mkdir(path);
-            }
-
-            QDir().mkdir(path + "/Animations");
-            QDir().mkdir(path + "/Audio");
-            QDir().mkdir(path + "/Charsets");
-            QDir().mkdir(path + "/Fonts");
-            QDir().mkdir(path + "/Maps");
-            QDir().mkdir(path + "/Sound effects");
-            QDir().mkdir(path + "/Sprites");
-            QDir().mkdir(path + "/Tileset");
-
-            QString file_name = path + "/" + ui->project_name_field->text() + ".asp";
-            QFile file(file_name);
-
-            if(file.open(QIODevice::ReadWrite)) {
-                QTextStream stream(&file);
-                stream << "project_name:" + ui->project_name_field->text() << endl;
-            }
-
-            file.close();
-
-            QMessageBox::information(this, tr("Information"),
-                                     tr("Le projet à bien été créé !"),
+            project->create_project(path, ui->project_name_field->text());
+            QMessageBox::information(this, tr("Informaiton"),
+                                     tr("Le projet à bien été créé."),
                                      QMessageBox::Ok);
+            set_validate(true);
             this->close();
         }
         catch(...) {
@@ -67,7 +59,13 @@ void NewProjectDialog::on_button_box_accepted()
                                   tr("Une erreur critique est survenue !\n"
                                      "Veuillez réessayer ultérieurement ou contacter le développeur."),
                                   QMessageBox::Ok);
+            QApplication::quit();
         }
+    }
+    else {
+        QMessageBox::information(this, tr("Erreur"),
+                                 tr("Veuillez remplir tous les champs correctement."),
+                                 QMessageBox::Ok);
     }
 }
 

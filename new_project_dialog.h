@@ -1,6 +1,7 @@
 #ifndef NEW_PROJECT_DIALOG_H
 #define NEW_PROJECT_DIALOG_H
 
+#include "project.h"
 #include <QDialog>
 
 namespace Ui {
@@ -15,6 +16,9 @@ public:
     explicit NewProjectDialog(QWidget *parent = 0);
     ~NewProjectDialog();
 
+    void set_project(Project *project);
+    bool get_validate();
+
 private slots:
     void on_path_project_button_clicked();
 
@@ -23,7 +27,10 @@ private slots:
     void on_button_box_rejected();
 
 private:
+    void set_validate(bool action);
     Ui::NewProjectDialog *ui;
+    Project *project;
+    bool validate;
 };
 
 #endif // NEW_PROJECT_DIALOG_H

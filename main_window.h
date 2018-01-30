@@ -4,6 +4,7 @@
 #include "new_project_dialog.h"
 #include "project.h"
 #include <QMainWindow>
+#include <QAction>
 
 namespace Ui {
 class MainWindow;
@@ -15,6 +16,7 @@ class MainWindow : public QMainWindow
 
 public:
     explicit MainWindow(QWidget *parent = 0);
+    void context_menu_update();
     ~MainWindow();
 
 private slots:
@@ -30,7 +32,9 @@ private slots:
 
 private:
     Ui::MainWindow *ui;
-    NewProjectDialog new_project_dialog;
+    //NewProjectDialog new_project_dialog;
+    QAction* new_map_action;
+    Project project;
 };
 
 #endif // MAIN_WINDOW_H

@@ -5,6 +5,8 @@
 #include <QTextStream>
 #include <QRegularExpression>
 #include <QFileSystemModel>
+#include <QMenu>
+#include <QAction>
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -12,6 +14,11 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     ui->setupUi(this);
     ui->statusBar->showMessage(tr("Prêt"));
+
+    /*QMenu menu;
+    new_map_action = new QAction(
+                     tr("Edit"), this);
+    addAction(new_map_action);*/
 }
 
 MainWindow::~MainWindow()
@@ -22,7 +29,15 @@ MainWindow::~MainWindow()
 void MainWindow::on_menu_new_project_triggered()
 {
     // Create a new projet
-    new_project_dialog.exec();
+    NewProjectDialog new_project_dialog;
+    new_project_dialog.set_project(&project);
+    if(new_project_dialog.exec()) {
+
+    }
+    if(new_project_dialog.get_validate()) {
+        // Update the main window
+        context_menu_update();
+    }
 
 }
 
@@ -38,47 +53,46 @@ void MainWindow::on_menu_open_project_triggered()
                                                     "/home",
                                                     tr("Alena Studio Project (*.asp)"));
 
-    if(dir != "") {
-        QFile file(dir);
-        if(file.open(QIODevice::ReadOnly)) {
-            QTextStream stream(&file);
-            file_content = stream.readAll();
-        }
+    if(project.open_project(dir) == 1) {
+        // Project opened
+        context_menu_update();
+    }
+    else {
 
-        file.close();
-
-        // Regular expression to get the name of the project
-        QRegularExpression re("^project_name:(?<project_name>[a-zA-Z]+)");
-        QRegularExpressionMatch match = re.match(file_content);
-        if(match.hasMatch()) {
-            project_name = match.captured("project_name");
-        }
-
-        QWidget::setWindowTitle("Alena Studio - " + project_name);
-
-        // Project Tree generation
-        QFileSystemModel *model = new QFileSystemModel;
-        QFileInfo file_info(dir);
-        QMessageBox msg;
-        msg.setText(file_info.absolutePath());
-        msg.exec();
-        model->setRootPath("/" + file_info.absolutePath() + "/");
-        ui->project_tree->setModel(model);
-        ui->project_tree->setEnabled(true);
-        ui->statusBar->showMessage(file_info.absolutePath());
     }
 
     ui->statusBar->showMessage(tr("Prêt"));
 }
 
+void MainWindow::context_menu_update() {
+    // There is an opened project
+    ui->menu_save_project->setEnabled(project.is_opened());
+    ui->menu_close_project->setEnabled(project.is_opened());
+    ui->menu_characters->setEnabled(project.is_opened());
+    ui->menu_ennemies->setEnabled(project.is_opened());
+    ui->menu_common_events->setEnabled(project.is_opened());
+    ui->menu_tilesets->setEnabled(project.is_opened());
+    ui->menu_animations->setEnabled(project.is_opened());
+}
+
 void MainWindow::on_menu_save_project_triggered()
 {
     // Save the current project
+    try {
+        project.save_project();
+    }
+    catch(...) {
+        QMessageBox msg;
+        msg.setText("Une erreur est survenue lors de la sauvegarde du projet");
+        msg.exec();
+    }
 }
 
 void MainWindow::on_menu_close_project_triggered()
 {
     // Close the current project
+    project.close();
+    context_menu_update();
 }
 
 void MainWindow::on_menu_exit_triggered()

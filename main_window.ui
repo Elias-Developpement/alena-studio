@@ -48,6 +48,9 @@
         <property name="enabled">
          <bool>false</bool>
         </property>
+        <property name="contextMenuPolicy">
+         <enum>Qt::DefaultContextMenu</enum>
+        </property>
        </widget>
       </item>
      </layout>
@@ -82,6 +85,9 @@
     <addaction name="menu_exit"/>
    </widget>
    <widget class="QMenu" name="menu_edit">
+    <property name="enabled">
+     <bool>true</bool>
+    </property>
     <property name="title">
      <string>&amp;Edition</string>
     </property>
@@ -95,6 +101,9 @@
     <addaction name="menu_preferences"/>
    </widget>
    <widget class="QMenu" name="menu_database">
+    <property name="enabled">
+     <bool>true</bool>
+    </property>
     <property name="title">
      <string>&amp;Base de données</string>
     </property>
@@ -105,6 +114,9 @@
     <addaction name="menu_common_events"/>
    </widget>
    <widget class="QMenu" name="menu_map">
+    <property name="enabled">
+     <bool>true</bool>
+    </property>
     <property name="title">
      <string>&amp;Carte</string>
     </property>
@@ -130,6 +142,9 @@
     <addaction name="menu_high_layer"/>
    </widget>
    <widget class="QMenu" name="menu_jeu">
+    <property name="enabled">
+     <bool>true</bool>
+    </property>
     <property name="title">
      <string>&amp;Jeu</string>
     </property>
