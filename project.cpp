@@ -162,3 +162,7 @@ QString Project::get_project_name() {
 
     return project_name;
 }
+
+QString Project::get_project_path() {
+    return project_path;
+}

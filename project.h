@@ -16,6 +16,7 @@ public:
     void close();
     void create_project(QString path_project, QString name_project);
     QString get_project_name();
+    QString get_project_path();
 private:
     QString project_path;
     QString project_name;

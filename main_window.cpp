@@ -1,4 +1,5 @@
 #include "main_window.h"
+#include "characters_dialog.h"
 #include "ui_main_window.h"
 #include <QFileDialog>
 #include <QMessageBox>
@@ -7,6 +8,7 @@
 #include <QFileSystemModel>
 #include <QMenu>
 #include <QAction>
+#include <QDir>
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -56,6 +58,7 @@ void MainWindow::on_menu_open_project_triggered()
     if(project.open_project(dir) == 1) {
         // Project opened
         context_menu_update();
+        project_tree_update();
     }
     else {
 
@@ -73,6 +76,17 @@ void MainWindow::context_menu_update() {
     ui->menu_common_events->setEnabled(project.is_opened());
     ui->menu_tilesets->setEnabled(project.is_opened());
     ui->menu_animations->setEnabled(project.is_opened());
+    ui->project_tree->setEnabled(project.is_opened());
+}
+
+void MainWindow::project_tree_update() {
+    QTreeWidgetItem *item = new QTreeWidgetItem;
+    // Map ID
+    item->setData(0,Qt::DisplayRole,1);
+    // Map Name
+    item->setData(1,Qt::DisplayRole, "Map 1");
+    // Add map on tree widget
+    ui->project_tree->addTopLevelItem(item);
 }
 
 void MainWindow::on_menu_save_project_triggered()
@@ -99,4 +113,11 @@ void MainWindow::on_menu_exit_triggered()
 {
     // Quit Alena Studio
     QApplication::exit(0);
+}
+
+void MainWindow::on_menu_characters_triggered()
+{
+    // Open characters dialog
+    CharactersDialog character_dialog;
+    character_dialog.exec();
 }

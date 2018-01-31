@@ -17,6 +17,7 @@ class MainWindow : public QMainWindow
 public:
     explicit MainWindow(QWidget *parent = 0);
     void context_menu_update();
+    void project_tree_update();
     ~MainWindow();
 
 private slots:
@@ -30,10 +31,13 @@ private slots:
 
     void on_menu_exit_triggered();
 
+    void on_menu_characters_triggered();
+
 private:
     Ui::MainWindow *ui;
     //NewProjectDialog new_project_dialog;
     QAction* new_map_action;
+    QAction* map_folder;
     Project project;
 };
 

@@ -15,11 +15,14 @@ TEMPLATE = app
 SOURCES += main.cpp\
         main_window.cpp \
     new_project_dialog.cpp \
-    project.cpp
+    project.cpp \
+    characters_dialog.cpp
 
 HEADERS  += main_window.h \
     new_project_dialog.h \
-    project.h
+    project.h \
+    characters_dialog.h
 
 FORMS    += main_window.ui \
-    new_project_dialog.ui
+    new_project_dialog.ui \
+    characters_dialog.ui
