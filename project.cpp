@@ -127,6 +127,11 @@ int Project::save_project() {
             file.close();
         }
 
+        file.setFileName(project_path + "/Maps/map1.map");
+        if(file.open(QIODevice::ReadWrite)) {
+            file.close();
+        }
+
         // True, success
         return 1;
     }
@@ -161,6 +166,22 @@ QString Project::get_project_name() {
     //msg_box.text("Nom du projet : " + project_name);
 
     return project_name;
+}
+
+// Get map list
+QList<QString> Project::get_map_list() {
+    int map_count = 1;
+    QList<QString> map_list;
+    QString map_id = QStringLiteral("%1").arg(map_count);
+
+    // While we found a map, added it to the list
+    while(QFileInfo::exists(project_path + "/Maps/map" + map_id + ".map")) {
+        map_list.append("Map " + map_id);
+        map_count++;
+        map_id = QStringLiteral("%1").arg(map_count);
+    }
+
+    return map_list;
 }
 
 QString Project::get_project_path() {

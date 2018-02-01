@@ -33,6 +33,8 @@ private slots:
 
     void on_menu_characters_triggered();
 
+    void on_menu_map_manager_triggered();
+
 private:
     Ui::MainWindow *ui;
     //NewProjectDialog new_project_dialog;

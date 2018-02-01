@@ -123,6 +123,8 @@
     <property name="title">
      <string>&amp;Base de données</string>
     </property>
+    <addaction name="menu_map_manager"/>
+    <addaction name="separator"/>
     <addaction name="menu_characters"/>
     <addaction name="menu_ennemies"/>
     <addaction name="menu_tilesets"/>
@@ -522,6 +524,14 @@
    </property>
    <property name="shortcut">
     <string>F3</string>
+   </property>
+  </action>
+  <action name="menu_map_manager">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="text">
+    <string>Gestionnaire de cartes</string>
    </property>
   </action>
  </widget>

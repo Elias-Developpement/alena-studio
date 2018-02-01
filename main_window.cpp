@@ -1,5 +1,6 @@
 #include "main_window.h"
 #include "characters_dialog.h"
+#include "map_manager_dialog.h"
 #include "ui_main_window.h"
 #include <QFileDialog>
 #include <QMessageBox>
@@ -39,6 +40,7 @@ void MainWindow::on_menu_new_project_triggered()
     if(new_project_dialog.get_validate()) {
         // Update the main window
         context_menu_update();
+        project_tree_update();
     }
 
 }
@@ -76,17 +78,24 @@ void MainWindow::context_menu_update() {
     ui->menu_common_events->setEnabled(project.is_opened());
     ui->menu_tilesets->setEnabled(project.is_opened());
     ui->menu_animations->setEnabled(project.is_opened());
+    ui->menu_map_manager->setEnabled(project.is_opened());
     ui->project_tree->setEnabled(project.is_opened());
 }
 
 void MainWindow::project_tree_update() {
-    QTreeWidgetItem *item = new QTreeWidgetItem;
-    // Map ID
-    item->setData(0,Qt::DisplayRole,1);
-    // Map Name
-    item->setData(1,Qt::DisplayRole, "Map 1");
-    // Add map on tree widget
-    ui->project_tree->addTopLevelItem(item);
+    QList<QString> map_list = project.get_map_list();
+    ui->project_tree->clear();
+
+    for(int i = 1 ; i <= map_list.size() ; i++) {
+        QTreeWidgetItem *item = new QTreeWidgetItem;
+        // Map ID
+        item->setData(0,Qt::DisplayRole, i);
+        // Map Name
+        item->setData(1,Qt::DisplayRole, map_list.at(i - 1));
+        // Add map on tree widget
+        ui->project_tree->addTopLevelItem(item);
+    }
+
 }
 
 void MainWindow::on_menu_save_project_triggered()
@@ -120,4 +129,13 @@ void MainWindow::on_menu_characters_triggered()
     // Open characters dialog
     CharactersDialog character_dialog;
     character_dialog.exec();
+}
+
+void MainWindow::on_menu_map_manager_triggered()
+{
+    // Map manager
+    MapManagerDialog map_manager_dialog;
+    map_manager_dialog.set_project(&project);
+    map_manager_dialog.exec();
+    this->project_tree_update();
 }
